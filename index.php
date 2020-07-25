@@ -4,7 +4,6 @@
         <title>INSCRIPTION</title>
         <meta charset="utf-8" />
 		
-        
         <link type="text/css" id="dark-mode" rel="stylesheet" href="">
 	    <style>
     input{
@@ -188,7 +187,7 @@ body{
 	width:10%;
 	/* height:50%; */
 	float:left;
-	margin-top: ;50px ;
+	margin-top: 50px ;
 }
 .textmot{
 	width:50%;
@@ -404,8 +403,44 @@ footer{
                     </p> 
                 </fieldset>
 
-             
-              
+                <?php
+   
+   if (isset($_POST['submit']))
+   {
+      
+   $Nom = htmlspecialchars(trim($_POST['Nom']));
+   $Prenom = htmlspecialchars(trim($_POST['Prenom']));
+   $email = htmlspecialchars(trim($_POST['email']));
+   $age = htmlspecialchars(trim($_POST['age']));
+   $sexe = htmlspecialchars(trim($_POST['sexe']));
+      
+   if ($Nom&&$Prenom&&$email&&$age&&$sexe)
+           {
+           if (strlen($password)>=6)
+               {
+                   if ($password==$repeatpassword)
+                   {
+               // On crypte le mot de passe
+                   $password = md5($password);
+    
+    // on se connecte à MySQL et on sélectionne la base
+       $c = new mysqli ("localhost","root","","mabasededonnée");
+     
+    //On créé la requête
+   $sql = "INSERT INTO newclient VALUES ('','$Nom','$Prenom','$age','$sexe')";
+     
+       // On envoie la requête
+   $res = $c->query($sql);
+          // on ferme la connexion
+   mysqli_close($c);
+     
+   }else echo "Les mots de passe ne sont pas identiques";
+   }else echo "Le mot de passe est trop court !";
+   }else echo "Veuillez saisir tous les champs !";
+      
+   }
+      
+   ?>
             </form>
          </div>
 	
